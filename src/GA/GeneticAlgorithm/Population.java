@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Population<C extends Chromosome<?>> {
-    private final Class<C> clazz;
+    final Class<C> clazz;
     private C[] population;
     private C[] fittestListCache;
 
@@ -46,19 +46,8 @@ public class Population<C extends Chromosome<?>> {
         return fittestListCache;
     }
 
-    public C selection(int tournamentSize) {
-        if (tournamentSize < 1) {
-            throw new IllegalArgumentException();
-        }
-        Population<C> tournament = new Population<>(clazz, tournamentSize);
-
-        for (int i = 0; i < tournamentSize; i++) {
-            int randomId = (int) (Math.random() * populationSize());
-            tournament.set(i, get(randomId));
-        }
-
-        C fittest = tournament.getFittestList()[0];
-        return fittest;
+    public C selection(ISelection selection) {
+        return selection.select( this);
     }
 
     @SuppressWarnings("unchecked")

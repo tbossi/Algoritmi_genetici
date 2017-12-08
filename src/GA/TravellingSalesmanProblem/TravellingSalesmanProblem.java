@@ -1,8 +1,11 @@
 package GA.TravellingSalesmanProblem;
 
 import GA.GeneticAlgorithm.GeneticAlgorithmSettings;
+import GA.GeneticAlgorithm.ISelection;
+import GA.GeneticAlgorithm.TournamentSelection;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TravellingSalesmanProblem {
     private ArrayList<City> citiesToVisit;
@@ -60,7 +63,9 @@ public class TravellingSalesmanProblem {
     }
 
     public static void main(String[] args) {
-        GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(1, 0.8, 7, 0.8, 0.055);
+        Random rng = new Random(1);
+        ISelection selection = new TournamentSelection(rng, 7);
+        GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(rng,1, 0.8, 0.8, 0.055, selection);
         TravellingSalesmanProblem TSP = new TravellingSalesmanProblem(CitiesToVisit(), settings, 10);
 
         TSP.solveProblem();

@@ -10,14 +10,14 @@ public abstract class GeneticAlgorithm<C extends Chromosome<C>, P extends Popula
     public P evolve(P oldPopulation) {
         P newPopulation = newPopulation(oldPopulation);
 
-        if (Math.random() < settings.CrossoverProbability) {
+        if (settings.Random.nextDouble() < settings.CrossoverProbability) {
             setElite(newPopulation, oldPopulation);
             crossoverPopulation(newPopulation, oldPopulation);
         } else {
             clonePopulation(newPopulation, oldPopulation);
         }
 
-        if (Math.random() < settings.MutationProbability) {
+        if (settings.Random.nextDouble() < settings.MutationProbability) {
             mutate(newPopulation);
         }
 
@@ -44,8 +44,8 @@ public abstract class GeneticAlgorithm<C extends Chromosome<C>, P extends Popula
 
     private void crossoverPopulation(P newPopulation, P oldPopulation) {
         for (int i = settings.Elite; i < newPopulation.populationSize(); i++) {
-            C parent1 = oldPopulation.selection(settings.TournamentSize);
-            C parent2 = oldPopulation.selection(settings.TournamentSize);
+            C parent1 = oldPopulation.selection(settings.Selection);
+            C parent2 = oldPopulation.selection(settings.Selection);
             newPopulation.set(i, parent1.crossover(parent2));
         }
     }
