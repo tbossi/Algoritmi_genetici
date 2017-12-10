@@ -2,7 +2,6 @@ package GA.KnapsackProblem;
 
 import GA.GeneticAlgorithm.*;
 import GA.GeneticAlgorithm.Population.Population;
-import GA.GeneticAlgorithm.Population.PopulationBuilder;
 import GA.GeneticAlgorithm.Selection.ISelection;
 import GA.GeneticAlgorithm.Selection.TournamentSelection;
 
@@ -12,10 +11,8 @@ import java.util.Random;
 public class KnapsackProblem {
     private GeneticAlgorithm<Knapsack> algorithm;
 
-    public KnapsackProblem(ArrayList<Content> contents, GeneticAlgorithmSettings settings, double maxWeight) {
-        PopulationBuilder<Knapsack> popBuilder = new PopulationBuilder<>(
-                new Knapsack.RandomKnapsack(contents, maxWeight));
-        this.algorithm = new GeneticAlgorithm<>(settings, popBuilder);
+    public KnapsackProblem(GeneticAlgorithmSettings settings, ArrayList<Content> contents, double maxWeight) {
+        this.algorithm = new GeneticAlgorithm<>(settings, new Knapsack.RandomKnapsack(contents, maxWeight));
     }
 
     private void solveProblem() {
@@ -64,7 +61,7 @@ public class KnapsackProblem {
         ISelection selection = new TournamentSelection(rng, 7);
         GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(
                 rng, 1, 0.8, 0.8, 0.055, selection, 10, 10);
-        KnapsackProblem TSP = new KnapsackProblem(ContentsToInclude(), settings, 30);
+        KnapsackProblem TSP = new KnapsackProblem(settings, ContentsToInclude(), 30);
 
         TSP.solveProblem();
     }

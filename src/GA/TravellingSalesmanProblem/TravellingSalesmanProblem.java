@@ -2,7 +2,6 @@ package GA.TravellingSalesmanProblem;
 
 import GA.GeneticAlgorithm.*;
 import GA.GeneticAlgorithm.Population.Population;
-import GA.GeneticAlgorithm.Population.PopulationBuilder;
 import GA.GeneticAlgorithm.Selection.ISelection;
 import GA.GeneticAlgorithm.Selection.TournamentSelection;
 
@@ -12,9 +11,8 @@ import java.util.Random;
 public class TravellingSalesmanProblem {
     private GeneticAlgorithm<Tour> algorithm;
 
-    public TravellingSalesmanProblem(ArrayList<City> citiesToVisit, GeneticAlgorithmSettings settings) {
-        PopulationBuilder<Tour> popBuilder = new PopulationBuilder<>(new Tour.RandomTour(citiesToVisit));
-        this.algorithm = new GeneticAlgorithm<>(settings, popBuilder);
+    public TravellingSalesmanProblem(GeneticAlgorithmSettings settings, ArrayList<City> citiesToVisit) {
+        this.algorithm = new GeneticAlgorithm<>(settings, new Tour.RandomTour(citiesToVisit));
     }
 
     private void solveProblem() {
@@ -61,7 +59,7 @@ public class TravellingSalesmanProblem {
         ISelection selection = new TournamentSelection(rng, 7);
         GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(
                 rng,1, 0.8, 0.8, 0.055, selection, 10, 10);
-        TravellingSalesmanProblem TSP = new TravellingSalesmanProblem(CitiesToVisit(), settings);
+        TravellingSalesmanProblem TSP = new TravellingSalesmanProblem(settings, CitiesToVisit());
 
         TSP.solveProblem();
     }

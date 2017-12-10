@@ -2,19 +2,18 @@ package GA.GeneticAlgorithm;
 
 import GA.GeneticAlgorithm.Population.Chromosome;
 import GA.GeneticAlgorithm.Population.Population;
-import GA.GeneticAlgorithm.Population.PopulationBuilder;
 
 public class GeneticAlgorithm<C extends Chromosome<C>> {
     private final GeneticAlgorithmSettings settings;
-    private final PopulationBuilder<C> populationBuilder;
+    private Chromosome.RandomBuilder<C> randomBuilder;
 
-    public GeneticAlgorithm(GeneticAlgorithmSettings settings, PopulationBuilder<C> populationBuilder) {
+    public GeneticAlgorithm(GeneticAlgorithmSettings settings, C.RandomBuilder<C> randomBuilder) {
         this.settings = settings;
-        this.populationBuilder = populationBuilder;
+        this.randomBuilder = randomBuilder;
     }
 
     public Population<C> run(GeneticAlgorithmListener<C> listener) {
-        Population<C> population = populationBuilder.initialPopulation(settings.PopulationSize);
+        Population<C> population = initialPopulation();
         for (int i = 0; i < settings.Iteration; i++) {
             listener.onIterationStart(i, population);
             population = evolve(population);
@@ -23,7 +22,15 @@ public class GeneticAlgorithm<C extends Chromosome<C>> {
         return population;
     }
 
-    public Population<C> evolve(Population<C> oldPopulation) {
+    private Population<C> initialPopulation() {
+        Population<C> population = new Population<>(settings.PopulationSize);
+        for (int i = 0; i < settings.PopulationSize; i++) {
+            population.set(i, C.randomNew(randomBuilder));
+        }
+        return population;
+    }
+
+    private Population<C> evolve(Population<C> oldPopulation) {
         Population<C> newPopulation = new Population<>(oldPopulation.populationSize());
 
         if (settings.Random.nextDouble() < settings.CrossoverProbability) {

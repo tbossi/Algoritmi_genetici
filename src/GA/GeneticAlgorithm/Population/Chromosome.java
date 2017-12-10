@@ -9,7 +9,7 @@ public abstract class Chromosome<T extends Chromosome<?>> {
         return builder.create();
     }
 
-    protected abstract static class RandomBuilder<C extends Chromosome<?>> {
+    public abstract static class RandomBuilder<C extends Chromosome<?>> {
         public abstract C create();
     }
 }

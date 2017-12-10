@@ -50,7 +50,6 @@ public class Knapsack extends Chromosome<Knapsack> {
         HashMap<Content, Boolean> contents = new HashMap<>();
         contentMap.keySet().forEach(key -> {
             contents.put(key, otherParent.contentMap.get(key) || contentMap.get(key));
-            //TODO: generalize crossover
         });
         return new Knapsack(contents, maxWeight);
     }
