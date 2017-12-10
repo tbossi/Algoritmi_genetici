@@ -1,5 +1,7 @@
 package GA.GeneticAlgorithm;
 
+import GA.GeneticAlgorithm.Selection.ISelection;
+
 import java.util.Random;
 
 public class GeneticAlgorithmSettings {
@@ -10,15 +12,19 @@ public class GeneticAlgorithmSettings {
     public final ISelection Selection;
 
     public final Random Random;
+    public final int Iteration;
+    public final int PopulationSize;
 
     public GeneticAlgorithmSettings(Random rng, int elite, double crossoverProbability, double mutationProbability,
-                                    double mutationRate, ISelection selection) {
+                                    double mutationRate, ISelection selection, int populationSize, int iteration) {
         if (rng == null) throw  new IllegalArgumentException();
         if (elite < 0) throw new IllegalArgumentException();
         if (crossoverProbability > 1 || crossoverProbability < 0) throw new IllegalArgumentException();
         if (mutationProbability > 1 || mutationProbability < 0) throw new IllegalArgumentException();
         if (selection == null) throw new IllegalArgumentException();
         if (mutationRate < 0) throw new IllegalArgumentException();
+        if (populationSize < 1) throw new IllegalArgumentException();
+        if (iteration < 0) throw new IllegalArgumentException();
 
         this.Random = rng;
         this.Elite = elite;
@@ -26,5 +32,7 @@ public class GeneticAlgorithmSettings {
         this.Selection = selection;
         this.MutationProbability = mutationProbability;
         this.MutationRate = mutationRate;
+        this.PopulationSize = populationSize;
+        this.Iteration = iteration;
     }
 }

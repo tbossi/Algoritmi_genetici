@@ -1,50 +1,44 @@
 package GA.TravellingSalesmanProblem;
 
-import GA.GeneticAlgorithm.GeneticAlgorithmSettings;
-import GA.GeneticAlgorithm.ISelection;
-import GA.GeneticAlgorithm.TournamentSelection;
+import GA.GeneticAlgorithm.*;
+import GA.GeneticAlgorithm.Population.Population;
+import GA.GeneticAlgorithm.Population.PopulationBuilder;
+import GA.GeneticAlgorithm.Selection.ISelection;
+import GA.GeneticAlgorithm.Selection.TournamentSelection;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class TravellingSalesmanProblem {
-    private ArrayList<City> citiesToVisit;
-    private TSPGeneticAlgorithm algorithm;
-    private final int iterations;
+    private GeneticAlgorithm<Tour> algorithm;
 
-    public TravellingSalesmanProblem(ArrayList<City> citiesToVisit, GeneticAlgorithmSettings settings, int iterations) {
-        this.citiesToVisit = citiesToVisit;
-        this.algorithm = new TSPGeneticAlgorithm(settings);
-        this.iterations = iterations;
+    public TravellingSalesmanProblem(ArrayList<City> citiesToVisit, GeneticAlgorithmSettings settings) {
+        PopulationBuilder<Tour> popBuilder = new PopulationBuilder<>(new Tour.RandomTour(citiesToVisit));
+        this.algorithm = new GeneticAlgorithm<>(settings, popBuilder);
     }
 
     private void solveProblem() {
-        TourPopulation pop = TourPopulation.initialPopulation(10, citiesToVisit);
         System.out.println("Starting: ");
+        Population<Tour> finalPopulation = algorithm.run(new GeneticAlgorithmListener<Tour>() {
+            @Override
+            public void onIterationStart(int iteration, Population<Tour> population) {
+                System.out.println("\nIteration "+iteration);
+                ArrayList<Tour> list = population.getFittestList();
+                System.out.println("Tours ordered by fitness: ");
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.println("  [" + i + "]\tdistance: " + list.get(i).getDistance());
+                    System.out.println("        " + list.get(i));
+                }
+            }
 
-        for (int i = 0; i < iterations; i++) {
-            System.out.println("\nIteration "+i);
-            pop = evolutionStep(pop);
-        }
+            @Override
+            public void onIterationEnd(int iteration, Population<Tour> population) {}
+        });
 
-        Tour[] list = pop.getFittestList();
-
+        ArrayList<Tour> list = finalPopulation.getFittestList();
         System.out.println("Finished");
-        System.out.println("Final tour: " + list[0]);
-        System.out.println("Final distance: " + list[0].getDistance());
-        System.out.println("Solution:");
-        System.out.println(list[0]);
-    }
-
-    private TourPopulation evolutionStep(TourPopulation oldPopulation) {
-        Tour[] list = oldPopulation.getFittestList();
-        System.out.println("Tours ordered by fitness: ");
-        for (int i = 0; i < list.length; i++) {
-            System.out.println("  [" + i + "]\tdistance: " + list[i].getDistance());
-            System.out.println("        " + list[i]);
-        }
-
-        return algorithm.evolve(oldPopulation);
+        System.out.println("Final tour: " + list.get(0));
+        System.out.println("Final distance: " + list.get(0).getDistance());
     }
 
     public static ArrayList<City> CitiesToVisit() {
@@ -65,8 +59,9 @@ public class TravellingSalesmanProblem {
     public static void main(String[] args) {
         Random rng = new Random(1);
         ISelection selection = new TournamentSelection(rng, 7);
-        GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(rng,1, 0.8, 0.8, 0.055, selection);
-        TravellingSalesmanProblem TSP = new TravellingSalesmanProblem(CitiesToVisit(), settings, 10);
+        GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(
+                rng,1, 0.8, 0.8, 0.055, selection, 10, 10);
+        TravellingSalesmanProblem TSP = new TravellingSalesmanProblem(CitiesToVisit(), settings);
 
         TSP.solveProblem();
     }

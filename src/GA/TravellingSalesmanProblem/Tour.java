@@ -1,14 +1,14 @@
 package GA.TravellingSalesmanProblem;
 
-import GA.GeneticAlgorithm.Chromosome;
-
+import GA.GeneticAlgorithm.Population.Chromosome;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Tour extends Chromosome<Tour> {
-    private ArrayList<City> tour = new ArrayList<>();
+    private List<City> tour;
 
-    public Tour(ArrayList<City> tour) {
+    public Tour(List<City> tour) {
         this.tour = tour;
     }
 
@@ -88,10 +88,19 @@ public class Tour extends Chromosome<Tour> {
         return tour.stream().map(City::toString).reduce((s, s2) -> s + " -> " + s2).get();
     }
 
-    public static Tour randomNew(ArrayList<City> tour) {
-        ArrayList<City> cities = new ArrayList<>();
-        tour.forEach(city -> cities.add(city));
-        Collections.shuffle(cities);
-        return new Tour(cities);
+    static class RandomTour extends Chromosome.RandomBuilder<Tour> {
+        private List<City> tour;
+
+        public RandomTour(List<City> tour) {
+            this.tour = tour;
+        }
+
+        @Override
+        public Tour create() {
+            ArrayList<City> cities = new ArrayList<>();
+            tour.forEach(city -> cities.add(city));
+            Collections.shuffle(cities);
+            return new Tour(cities);
+        }
     }
 }

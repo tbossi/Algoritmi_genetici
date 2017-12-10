@@ -1,4 +1,4 @@
-package GA.GeneticAlgorithm;
+package GA.GeneticAlgorithm.Selection;
 
 import java.util.Random;
 

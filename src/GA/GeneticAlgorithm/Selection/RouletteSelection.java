@@ -1,4 +1,7 @@
-package GA.GeneticAlgorithm;
+package GA.GeneticAlgorithm.Selection;
+
+import GA.GeneticAlgorithm.Population.Chromosome;
+import GA.GeneticAlgorithm.Population.Population;
 
 import java.util.Random;
 

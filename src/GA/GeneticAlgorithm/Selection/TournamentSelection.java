@@ -1,4 +1,7 @@
-package GA.GeneticAlgorithm;
+package GA.GeneticAlgorithm.Selection;
+
+import GA.GeneticAlgorithm.Population.Chromosome;
+import GA.GeneticAlgorithm.Population.Population;
 
 import java.util.Random;
 
@@ -14,14 +17,14 @@ public class TournamentSelection extends Selection {
 
     @Override
     public <C extends Chromosome<?>, P extends Population<C>> C select(P population) {
-        Population<C> tournament = new Population<>(population.clazz, tournamentSize);
+        Population<C> tournament = new Population<>(tournamentSize);
 
         for (int i = 0; i < tournamentSize; i++) {
             int randomId = (int) (random.nextDouble() * population.populationSize());
             tournament.set(i, population.get(randomId));
         }
 
-        C fittest = tournament.getFittestList()[0];
+        C fittest = tournament.getFittestList().get(0);
         return fittest;
     }
 }
