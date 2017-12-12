@@ -1,6 +1,8 @@
 package GA.KnapsackProblem;
 
-import GA.GeneticAlgorithm.*;
+import GA.GeneticAlgorithm.GeneticAlgorithm;
+import GA.GeneticAlgorithm.GeneticAlgorithmListener;
+import GA.GeneticAlgorithm.GeneticAlgorithmSettings;
 import GA.GeneticAlgorithm.Population.Population;
 import GA.GeneticAlgorithm.Selection.ISelection;
 import GA.GeneticAlgorithm.Selection.TournamentSelection;
@@ -44,24 +46,37 @@ public class KnapsackProblem {
     public static ArrayList<Content> ContentsToInclude() {
         ArrayList<Content> contents = new ArrayList<>();
 
-        contents.add(new Content(15, 5, "Water"));
-        contents.add(new Content(0.7, 0.6, "Candy"));
-        contents.add(new Content(2, 3, "A"));
-        contents.add(new Content(0.1, -3, "B"));
-        contents.add(new Content(1.003, 15, "C"));
-        contents.add(new Content(6.33, 4.89, "D"));
-        contents.add(new Content(8.28, 3.05, "E"));
-        contents.add(new Content(0.7, 1.2, "F"));
+        contents.add(new Content(2, 0, "A"));
+        contents.add(new Content(0.1, 0, "B"));
+        contents.add(new Content(0.6, 0, "C"));
+        contents.add(new Content(6, 0, "D"));
+        contents.add(new Content(8.28, 0, "E"));
+        contents.add(new Content(1.7, 0, "F"));
+        contents.add(new Content(1.7, 0, "G"));
+        contents.add(new Content(12, 0, "H"));
+        contents.add(new Content(4.3, 0, "I"));
+        contents.add(new Content(10.72, 0, "J"));
+        contents.add(new Content(0.6, 0, "K"));
+        contents.add(new Content(0.6, 0, "L"));
+        contents.add(new Content(0.55, 0, "M"));
+        contents.add(new Content(0.76, 0, "N"));
+        contents.add(new Content(0.83, 0, "O"));
+        contents.add(new Content(2.26, 0, "P"));
+        contents.add(new Content(1.51, 0, "Q"));
+        contents.add(new Content(0.17, 0, "R"));
+        contents.add(new Content(5.09, 0, "S"));
+        contents.add(new Content(1, 0, "T"));
+        contents.add(new Content(0.65, 0, "U"));
 
         return contents;
     }
 
     public static void main(String[] args) {
         Random rng = new Random(1);
-        ISelection selection = new TournamentSelection(rng, 7);
+        ISelection selection = new TournamentSelection(rng, 4);
         GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(
-                rng, 1, 0.8, 0.8, 0.055, selection, 10, 10);
-        KnapsackProblem TSP = new KnapsackProblem(settings, ContentsToInclude(), 30);
+                rng, 1, 1, 1, 0.275, selection, 7, 21);
+        KnapsackProblem TSP = new KnapsackProblem(settings, ContentsToInclude(), 20);
 
         TSP.solveProblem();
     }

@@ -14,15 +14,20 @@ public class RouletteSelection extends Selection {
     public <C extends Chromosome<?>, P extends Population<C>> C select(P population) {
         double totalFitness = 0;
         for (int i = 0; i < population.populationSize(); i++) {
-            totalFitness += population.get(i).getFitness();
+            totalFitness += positiveFitness(population.get(i).getFitness());
         }
         double chosen = random.nextDouble() * totalFitness;
         double aggregator = 0;
         for (int i = 0; i < population.populationSize(); i++) {
-            aggregator += population.get(i).getFitness();
+            aggregator += positiveFitness(population.get(i).getFitness());
             if (aggregator >= chosen)
                 return population.get(i);
         }
         return null;
+    }
+
+    /* Handles fitness with negative values*/
+    private double positiveFitness(double originalFitness) {
+        return originalFitness / 2 + Double.MAX_VALUE / 2;
     }
 }
