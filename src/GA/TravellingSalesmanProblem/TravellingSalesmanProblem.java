@@ -4,6 +4,8 @@ import GA.GeneticAlgorithm.*;
 import GA.GeneticAlgorithm.Population.Population;
 import GA.GeneticAlgorithm.Selection.ISelection;
 import GA.GeneticAlgorithm.Selection.TournamentSelection;
+import GA.TravellingSalesmanProblem.Model.City;
+import GA.TravellingSalesmanProblem.Model.Tour;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -55,12 +57,14 @@ public class TravellingSalesmanProblem {
     }
 
     public static void main(String[] args) {
-        Random rng = new Random(1);
+        /*Random rng = new Random(1);
         ISelection selection = new TournamentSelection(rng, 7);
         GeneticAlgorithmSettings settings = new GeneticAlgorithmSettings(
                 rng,1, 0.8, 0.8, 0.055, selection, 10, 10);
         TravellingSalesmanProblem TSP = new TravellingSalesmanProblem(settings, CitiesToVisit());
 
-        TSP.solveProblem();
+        TSP.solveProblem();*/
+        TSPApplication.launch(args);
+
     }
 }

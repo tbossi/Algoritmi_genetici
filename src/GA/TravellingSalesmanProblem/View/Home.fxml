@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GA.TravellingSalesmanProblem.Controller.HomeController">
+    <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+            <Menu mnemonicParsing="false" text="File" />
+            <Menu mnemonicParsing="false" text="Edit">
+                <items>
+                    <MenuItem fx:id="generateMenuItem" mnemonicParsing="false" text="Generate" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+    <BorderPane>
+        <left>
+            <VBox>
+                <fx:include fx:id="settings" source="Settings.fxml" />
+            </VBox>
+        </left>
+        <center>
+            <HBox prefHeight="456.0" prefWidth="693.0">
+                <fx:include fx:id="population" prefWidth="300.0" source="Population.fxml" />
+                <fx:include fx:id="graph" prefWidth="300.0" source="Graph.fxml" />
+            </HBox>
+        </center>
+      <bottom>
+         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <Button fx:id="startButton" mnemonicParsing="false" text="Start" />
+               <Label fx:id="currentIterationLabel" />
+            </children>
+         </HBox>
+      </bottom>
+    </BorderPane>
+</VBox>
